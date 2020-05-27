@@ -1,0 +1,3 @@
+[submodule "ejem-jenkins-sharedlib"]
+	path = ejem-jenkins-sharedlib
+	url = git@github.com:MasterCloudApps/hello-jenkins-shared-lib.git
