@@ -1,0 +1,10 @@
+node {
+    stage('First sample') {
+        build job: 'StepSyntaxArchiveArtifacts',
+              propagate: false
+    }
+    
+    stage('Second sample') {
+        build 'DeclarativePipeline'
+    }
+}

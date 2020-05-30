@@ -1,0 +1,22 @@
+pipeline {
+  agent any
+  stages {
+    stage('Prepara') {
+      steps {
+          writeFile encoding: 'utf-8', file: 'artifact.txt', text: 'Hello, world!'
+          writeFile encoding: 'utf-8', file: 'logs.txt', text: 'Core dumped!'
+      }
+    }
+  }
+  post {
+    changed {
+      mail to:"me@example.com", subject:"OK: ${currentBuild.fullDisplayName}",body: "Success"
+    }
+    unstable {
+      archiveArtifacts 'logs.txt'
+    }
+    success {
+      archiveArtifacts 'artifact.txt'
+    }
+  }
+}

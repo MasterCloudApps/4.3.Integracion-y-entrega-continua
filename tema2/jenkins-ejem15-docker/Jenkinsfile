@@ -1,0 +1,17 @@
+node {
+    
+   stage ('Checkout') {
+      git url: 'https://github.com/testcontainers/testcontainers-java-examples'
+   }
+
+   stage ('Build') {
+
+      docker.image('maven').inside('-v $HOME/.m2:/root/.m2 '+
+          '-v /var/run/docker.sock:/var/run/docker.sock') {
+
+        sh 'cd redis-backed-cache; mvn test'
+      }
+
+      junit '**/target/surefire-reports/TEST-*.xml'
+   }
+}

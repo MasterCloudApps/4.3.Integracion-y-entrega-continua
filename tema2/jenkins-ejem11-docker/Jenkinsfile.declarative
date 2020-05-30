@@ -1,0 +1,21 @@
+pipeline {
+ agent any
+ stages {
+   stage("Checkout") { 
+     steps {
+       git 'https://github.com/jglick/simple-maven-project-with-tests.git'
+     }
+   }
+   stage("Build") {
+     steps {
+       sh "docker run --rm -v \"\$PWD\":/app -w /app maven:3.3.9-jdk-8 "+
+      "mvn clean package"
+     }
+   }
+ } 
+ post {
+    always {
+      junit "target/surefire-reports/TEST-*.xml"
+    }
+ }
+}

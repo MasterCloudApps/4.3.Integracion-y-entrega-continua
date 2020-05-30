@@ -1,0 +1,11 @@
+stage('Update ci environments') {
+   steps {
+      build job: 'Development/run_ansible', 
+		  propagate: false
+
+	  build job: 'Development/kurento_ci_build', 
+		  propagate: false, 
+		  parameters: [string(name: 'GERRIT_REFSPEC', value: 'master')]
+      }
+   }
+}

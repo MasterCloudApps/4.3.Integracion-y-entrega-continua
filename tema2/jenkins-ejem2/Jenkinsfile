@@ -1,0 +1,18 @@
+import hudson.tasks.ArtifactArchiver
+
+node {
+    stage('Preparation') {
+        writeFile encoding: 'utf-8', file: 'one.txt', text: 'One!'
+        writeFile encoding: 'utf-8', file: 'two.txt', text: 'Two!'
+        writeFile encoding: 'utf-8', file: 'three.txt', text: 'Three!'
+    }
+    stage('Step syntax') {
+        archiveArtifacts 'one.txt'
+    }
+    stage('$class syntax') {
+        step([$class: 'ArtifactArchiver', artifacts: 'two.txt'])
+    }
+    stage('Groovy syntax') {
+        step(new ArtifactArchiver('three.txt'))
+    }
+}
