@@ -1,26 +1,27 @@
 node {
-    
-   stage ('Checkout') {
-      git url: 'https://github.com/codeurjc/curso-ci.git'
-   }
 
-   stage ('Build Java') {
+	stage ('Checkout') {
+		git url: 'https://github.com/MasterCloudApps/4.3.Integracion-y-entrega-continua.git'
+	}
 
-      docker.image('maven').inside('-v $HOME/.m2:/root/.m2') {
+	stage ('Build Java') {
 
-        sh 'cd ejem1; mvn package'
+		docker.image('maven').inside('-v $HOME/.m2:/root/.m2') {
+			sh 'cd tema4/ejem1; mvn package'
+		}
+	}
+
+	stage ('Build Docker image') {
+		sh 'cd tema4/ejem1; ./build-image.sh'
+	}
+	
+	stage ('Publish Docker image') {
+      def myimage = docker.image('maes95/curso-ci-ejem1:latest')
+      withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'maes95-dockerhub',
+         usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+         sh 'docker login -u "$USERNAME" -p "$PASSWORD"'
+         myimage.push()
       }
-   }
+	}
 
-   stage ('Docker Image') {
-
-      sh 'cd ejem1; ./build-image.sh'
-
-      sh 'cd ejem1; docker push micaelgallego/curso-ci-ejem1:latest'
-   }
-
-  always {
-      step([$class: 'JUnitResultArchiver', 
-         testResults: '**/target/surefire-reports/TEST-*.xml'])
-  }
 }
