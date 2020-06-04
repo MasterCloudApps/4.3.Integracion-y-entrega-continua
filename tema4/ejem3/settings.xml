@@ -6,12 +6,12 @@
     <server>
       <id>nexus-snapshots</id>
       <username>admin</username>
-      <password>pass</password>
+      <password>${env.ADMIN_PASS}</password>
     </server>
     <server>
       <id>nexus-releases</id>
       <username>admin</username>
-      <password>pass</password>
+      <password>${env.ADMIN_PASS}</password>
     </server>
   </servers>
   <mirrors>

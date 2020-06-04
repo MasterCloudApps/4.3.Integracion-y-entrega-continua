@@ -7,7 +7,7 @@ node {
    stage ('Build Java') {
 
       docker.image('maven').inside('-v $HOME/.m2:/root/.m2') {
-        sh 'cd tema4/ejem4; mvn package'
+        sh 'cd tema4/ejer1-solucion; mvn package'
       }
 
    }
