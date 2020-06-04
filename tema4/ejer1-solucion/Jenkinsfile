@@ -17,7 +17,7 @@ node {
    }
 
    stage('Publish') {
-     nexusPublisher nexusInstanceId: 'localNexus', nexusRepositoryId: 'mvn-releases', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: '', filePath: 'tema4/ejem4/target/ejer1-solucion-${TAG}.jar']], mavenCoordinate: [artifactId: 'ejer1-solucion', groupId: 'es.codeurjc.ci', packaging: 'jar', version: '${TAG}']]]
+     nexusPublisher nexusInstanceId: 'localNexus', nexusRepositoryId: 'mvn-releases', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: '', filePath: 'tema4/ejer1-solucion/target/ejer1-solucion-${TAG}.jar']], mavenCoordinate: [artifactId: 'ejer1-solucion', groupId: 'es.codeurjc.ci', packaging: 'jar', version: '${TAG}']]]
    }
 
 }
